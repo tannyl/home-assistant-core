@@ -1,0 +1,11 @@
+{
+  "domain": "m_bus",
+  "name": "M-Bus",
+  "codeowners": ["@tannyl"],
+  "config_flow": true,
+  "documentation": "https://www.home-assistant.io/integrations/m_bus",
+  "integration_type": "hub",
+  "iot_class": "local_polling",
+  "quality_scale": "bronze",
+  "requirements": ["pyMeterBus==0.8.4", "pyserial==3.5"]
+}

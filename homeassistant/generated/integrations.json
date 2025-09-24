@@ -3715,6 +3715,12 @@
       "config_flow": false,
       "iot_class": "local_polling"
     },
+    "m_bus": {
+      "name": "M-Bus",
+      "integration_type": "hub",
+      "config_flow": true,
+      "iot_class": "local_polling"
+    },
     "madeco": {
       "name": "Madeco",
       "integration_type": "virtual",

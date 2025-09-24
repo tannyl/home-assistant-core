@@ -1,0 +1,138 @@
+{
+  "config": {
+    "initiate_flow": {
+      "user": "Add M-Bus master",
+      "reconfigure": "Reconfigure M-Bus master"
+    },
+    "step": {
+      "user": {
+        "title": "Add M-Bus master",
+        "description": "Configure the M-Bus master connection.",
+        "data": {
+          "host": "[%key:common::config_flow::data::host%]",
+          "port": "[%key:common::config_flow::data::port%]"
+        },
+        "data_description": {
+          "host": "IP address or hostname of the M-Bus master (e.g., your EthMBus-XL device)",
+          "port": "TCP port for M-Bus communication (default: 10001)"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure {name}",
+        "description": "Update the connection settings for your M-Bus master. The connection will be tested before saving changes.",
+        "data": {
+          "host": "[%key:common::config_flow::data::host%]",
+          "port": "[%key:common::config_flow::data::port%]"
+        },
+        "data_description": {
+          "host": "IP address or hostname of the M-Bus master",
+          "port": "TCP port for M-Bus communication"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
+      "reconfigure_successful": "[%key:common::config_flow::abort::reconfigure_successful%]"
+    }
+  },
+  "config_subentries": {
+    "meter": {
+      "initiate_flow": {
+        "user": "Add M-Bus meter",
+        "reconfigure": "Reconfigure M-Bus meter"
+      },
+      "entry_type": "M-Bus meter",
+      "step": {
+        "user": {
+          "title": "Add or search for M-Bus meters",
+          "description": "You can either a meter by specifying its address manually or select it from the search results after searching for meters on the bus. Searching may take a while. Search results are cached so you can add multiple meters from the same search.",
+          "menu_options": {
+            "address": "Add meter based on address",
+            "select": "Add meter from search results",
+            "search": "Search for meters"
+          }
+        },
+        "address": {
+          "title": "Add meter based on address",
+          "description": "The bus address is a number between 1 and 250 that identifies the meter on the M-Bus. You can't add meters again that have already been added.",
+          "data": {
+            "bus_address": "Bus address"
+          },
+          "data_description": {
+            "bus_address": "Bus address of the meter (1-250)"
+          }
+        },
+        "select": {
+          "title": "Select meter from search results",
+          "description": "Found {total_meter_count} meters connected to {master_name} with {addable_meter_count} of them not added yet. {bus_searched_count} out of {total_bus_addresses} addresses have been scanned so far.",
+          "data": {
+            "target_address": "Available for addition"
+          }
+        },
+        "search": {
+          "title": "Search for meters",
+          "description": "You are about to search for meters on the bus. You can limit the search to a specific range of addresses to speed up the process. The search will take some time to complete.",
+          "data": {
+            "start_address": "Start address",
+            "end_address": "End address"
+          },
+          "data_description": {
+            "start_address": "Searching will start at this address. Must be equal to or smaller than the end address.",
+            "end_address": "Searching will end at this address. Must be equal to or greater than the start address."
+          }
+        },
+        "no_search_yet": {
+          "title": "Nothing to select",
+          "description": "You have not performed a search for meters yet. Start a search to discover meters on the bus.",
+          "menu_options": {
+            "search": "Search for meters"
+          }
+        },
+        "nothing_found": {
+          "title": "No meters found",
+          "description": "No meters were found on the bus. If you haven't searched the entire address range yet, you could try searching again to see if there are any meters at other addresses.",
+          "menu_options": {
+            "search": "Search for meters"
+          }
+        },
+        "nothing_available": {
+          "title": "No meters available",
+          "description": "All found meters have already been added. You could try searching again to see if there are any new meters on the bus.",
+          "menu_options": {
+            "search": "Search for meters"
+          }
+        },
+        "add_meter": {
+          "title": "Adding meter",
+          "description": "Add a meter to {master_name} based on its address on the bus.",
+          "data": {
+            "name": "Meter name (optional)"
+          },
+          "data_description": {
+            "meter_address": "Bus address of the meter (1-250)",
+            "name": "Friendly name for the meter (leave empty to auto-generate)"
+          }
+        }
+      },
+      "progress": {
+        "searching_meters": "Scanning bus...",
+        "querying_address": "Querying address..."
+      },
+      "abort": {
+        "unknown": "[%key:common::config_flow::error::unknown%]",
+        "search_failed": "Search failed",
+        "nothing_to_add": "No meter found at this bus address.",
+        "already_configured": "The meter at this bus address has already been added to Home Assistant."
+      },
+      "error": {
+        "no_meter_selected": "You must select a meter first before you can add it.",
+        "start_before_end": "Start address must be less than or equal to end address.",
+        "end_before_start": "End address must be greater than or equal to start address."
+      }
+    }
+  }
+}
